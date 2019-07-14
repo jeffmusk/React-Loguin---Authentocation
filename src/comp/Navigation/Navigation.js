@@ -35,6 +35,9 @@ export default class Example extends React.Component {
           <NavItem>
             <NavLink tag={Link} to={Routes.HOME}>Home</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to={Routes.SIGN_UP}>Registro</NavLink>
+          </NavItem>
           <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle nav caret>
               Adminitrar
