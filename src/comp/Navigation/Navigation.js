@@ -23,23 +23,18 @@ export default class Example extends React.Component {
   render() {
     return (
       <div>
-        <Nav pills>
-          <NavItem>
-            
-              <NavLink  tag={Link} to={Routes.SIGN_IN} >Login</NavLink>
-            </NavItem>
-            <NavItem>
+        <Nav  className="navbar navbar-expand-lg navbar-dark bg-dark">
+          
+          <NavItem className="navbar-nav ">
             <NavLink  tag={Link} to={Routes.LANDING} >Landing</NavLink>
           </NavItem>
 
-          <NavItem>
+          <NavItem className="navbar-nav ">
             <NavLink tag={Link} to={Routes.HOME}>Home</NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to={Routes.SIGN_UP}>Registro</NavLink>
-          </NavItem>
-          <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle nav caret>
+          
+          <Dropdown nav  className="mr-auto" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+            <DropdownToggle  caret>
               Adminitrar
             </DropdownToggle>
             <DropdownMenu>
@@ -47,13 +42,19 @@ export default class Example extends React.Component {
 
               <DropdownItem>
               <NavItem>
-                <NavLink  tag={Link} to={Routes.ACCOUNT} >Mi cuenta</NavLink>
+                <NavLink className="navbar-nav "  tag={Link} to={Routes.ACCOUNT} >Mi cuenta</NavLink>
               </NavItem>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem tag={Link} to={Routes.ADMIN}>Adminitrador</DropdownItem>
             </DropdownMenu>
           </Dropdown>
+          <NavItem className="navbar-nav  ">       
+              <NavLink  tag={Link} to={Routes.SIGN_IN} >Login</NavLink>
+          </NavItem>
+          <NavItem  nav className="navbar-nav ">
+            <NavLink tag={Link} to={Routes.SIGN_UP}>Registro</NavLink>
+          </NavItem>
           
           
         </Nav>
