@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {BrowserRouter , Route , Switch } from 'react-router-dom';
 import Home from '../Home/Home';
 import {  Container } from 'reactstrap';

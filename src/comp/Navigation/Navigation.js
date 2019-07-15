@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import * as Routes from '../../Constantes/routes';
+import CerrarSesion from '../CerraSesion/CerrarSesion';
 
 
 export default class Example extends React.Component {
@@ -37,17 +38,20 @@ export default class Example extends React.Component {
             <DropdownToggle  caret>
               Adminitrar
             </DropdownToggle>
+
             <DropdownMenu>
               <DropdownItem header>Cuentas</DropdownItem>
-
               <DropdownItem>
-              <NavItem>
-                <NavLink className="navbar-nav "  tag={Link} to={Routes.ACCOUNT} >Mi cuenta</NavLink>
-              </NavItem>
+                <NavItem>
+                  <NavLink className="navbar-nav "  tag={Link} to={Routes.ACCOUNT} >Mi cuenta</NavLink>
+                </NavItem>
               </DropdownItem>
-              <DropdownItem divider />
+            <DropdownItem divider />
               <DropdownItem tag={Link} to={Routes.ADMIN}>Adminitrador</DropdownItem>
+              <DropdownItem divider />
+              <CerrarSesion/> 
             </DropdownMenu>
+
           </Dropdown>
           <NavItem className="navbar-nav  ">       
               <NavLink  tag={Link} to={Routes.SIGN_IN} >Login</NavLink>
