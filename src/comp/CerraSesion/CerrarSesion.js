@@ -1,10 +1,11 @@
 import React from 'react';
-import {  DropdownItem } from 'reactstrap';
+import {  Button } from 'reactstrap';
 
 import { withFirebase } from '../Firebase';
 
 const SignOutButton = ({ firebase }) => (
-  <DropdownItem onClick={firebase.doSignOut} >Cerrar Sesion </DropdownItem>
+  <Button  color="secondary" onClick={firebase.doSignOut}>Cerrar Sesion</Button>
+  
 );
 
 export default withFirebase(SignOutButton);

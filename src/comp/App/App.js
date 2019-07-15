@@ -8,15 +8,35 @@ import Cuenta from '../Cuenta/Cuenta';
 import Admin from '../Admin/Admin';
 import Landing from '../Landing/Landing';
 import Registro from '../Registro/Registro';
+import { withFirebase } from '../Firebase';
 
 
+class App extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      authUser: null,
+    };
+  }
 
-function App() {
-  return (
-    <BrowserRouter >  
+  componentDidMount(){
+    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState({ authUser })
+        : this.setState({ authUser: null });
+    });
+  }
+
+  componentWillUnmount() {
+    this.listener();
+  }
+
+  render() {
+    return (
+        <BrowserRouter >  
       
-      <Navigation />
+      <Navigation authUser={this.state.authUser} />
 
       <Container fluid={false}  >
         <Switch>
@@ -33,7 +53,10 @@ function App() {
         </Switch>
       </Container>
     </BrowserRouter>  
-  );
+    );
+  }
 }
 
-export default App;
+
+
+export default withFirebase(App);

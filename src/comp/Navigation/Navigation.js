@@ -1,11 +1,24 @@
 import React from 'react';
-import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
+import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import * as Routes from '../../Constantes/routes';
 import CerrarSesion from '../CerraSesion/CerrarSesion';
 
 
-export default class Example extends React.Component {
+
+
+const NavigationAuth = () => (
+  <CerrarSesion/>
+);
+
+const NavigationNonAuth = () => (
+  <NavItem className="navbar-nav  ">       
+      <Button  color="primary" tag={Link} to={Routes.SIGN_IN} >Iniciar Sesion</Button>
+  </NavItem>
+  
+  );
+
+export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +33,20 @@ export default class Example extends React.Component {
       dropdownOpen: !this.state.dropdownOpen
     });
   }
+  DinamicNav= () =>{
+    if (this.props.authUser) {
+      return(
+        <NavigationAuth />
+        )
+    } else {
+      return(
+        <NavigationNonAuth />
+        )
+    }
+   
+   
+  }
+  
 
   render() {
     return (
@@ -30,7 +57,7 @@ export default class Example extends React.Component {
             <NavLink  tag={Link} to={Routes.LANDING} >Landing</NavLink>
           </NavItem>
 
-          <NavItem className="navbar-nav ">
+          <NavItem className="navbar-nav  ">
             <NavLink tag={Link} to={Routes.HOME}>Home</NavLink>
           </NavItem>
           
@@ -49,16 +76,12 @@ export default class Example extends React.Component {
             <DropdownItem divider />
               <DropdownItem tag={Link} to={Routes.ADMIN}>Adminitrador</DropdownItem>
               <DropdownItem divider />
-              <CerrarSesion/> 
+              
             </DropdownMenu>
-
           </Dropdown>
-          <NavItem className="navbar-nav  ">       
-              <NavLink  tag={Link} to={Routes.SIGN_IN} >Login</NavLink>
-          </NavItem>
-          <NavItem  nav className="navbar-nav ">
-            <NavLink tag={Link} to={Routes.SIGN_UP}>Registro</NavLink>
-          </NavItem>
+
+          {this.DinamicNav()}
+          
           
           
         </Nav>
