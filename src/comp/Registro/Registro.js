@@ -3,7 +3,7 @@ import { Link , withRouter} from 'react-router-dom';
 import * as ROUTES from '../../Constantes/routes';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
-import { Col, Button, Form, FormGroup, Label, Input, Row } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input, Row, Alert } from 'reactstrap';
 
 const Registro = () => (
   <div>
@@ -92,7 +92,7 @@ class SignUpFormBase  extends Component {
           </FormGroup>
   
 
-          {error && <p>{error.message}</p>}
+          {error && <Alert className="text-center mt-2" color="danger"> {error.message}</Alert>}
 
 
         </Form>
