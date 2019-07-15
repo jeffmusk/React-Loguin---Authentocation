@@ -3,10 +3,11 @@ import { Link , withRouter} from 'react-router-dom';
 import * as ROUTES from '../../Constantes/routes';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
+import { Col, Button, Form, FormGroup, Label, Input, Row } from 'reactstrap';
 
 const Registro = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1 className="text-center mt-5">Registro</h1>
       <SignUpForm  />
   </div>
 );
@@ -54,25 +55,51 @@ class SignUpFormBase  extends Component {
     const isInvalid =      passwordOne !== passwordTwo ||     passwordOne === '' ||      email === '' ||      username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        
-        <input
-          name="username"    value={username}  onChange={this.onChange} type="text"  placeholder="Full Name" />
-        <input
-          name="email"  value={email}  onChange={this.onChange}  type="text"  placeholder="Email Address"/>
-        <input
-          name="passwordOne"   value={passwordOne}   onChange={this.onChange}   type="password"   placeholder="Password" />
-        <input
-          name="passwordTwo"   value={passwordTwo}   onChange={this.onChange}   type="password"   placeholder="Confirm Password" />
-        
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+      <Row className="mt-5">
+      <Col sm={2} >
 
-        {error && <p>{error.message}</p>}
+      </Col>
+      <Col sm={8} >
+        <Form onSubmit={this.onSubmit}>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>User Name</Label>
+            <Col sm={9}>
+              <Input name="username"    value={username}  onChange={this.onChange} type="text"  placeholder="Nombre de usuario"/>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>Email</Label>
+            <Col sm={9}>
+              <Input  name="email"  value={email}  onChange={this.onChange}  type="text"  placeholder="Correo Electronico"/>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>Contraseña</Label>
+            <Col sm={9}>
+              <Input   name="passwordOne"   value={passwordOne}   onChange={this.onChange}   type="password"   placeholder="Password" />
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>Repetir Contraseña</Label>
+            <Col sm={9}>
+              <Input  name="passwordTwo"   value={passwordTwo}   onChange={this.onChange}   type="password"   placeholder="Confirm Password"/>
+            </Col>
+          </FormGroup>
+          <FormGroup check row>
+            <Col sm={{ size: 9, offset: 3 }}>
+              <Button disabled={isInvalid}  type="submit">Registrate</Button>
+            </Col>
+          </FormGroup>
+  
+
+          {error && <p>{error.message}</p>}
 
 
-      </form>
+        </Form>
+      
+      
+      </Col>
+    </Row>
     );
   }
 }
