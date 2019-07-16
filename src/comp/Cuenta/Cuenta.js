@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import {  Row, Col } from 'reactstrap';
 import CambiarPass from './Cambiarpass';
 import ResetPass from '../ContraseniaOlvidada/ResetPass'
-import { AuthUserContext } from '../Session/Session';
 import { withAuthorization } from '../Session/Session';
 
 class Cuenta extends Component {
