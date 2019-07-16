@@ -85,7 +85,7 @@ export default class Navigation extends React.Component {
             <AuthUserContext.Consumer>
               
               {authUser =>
-                authUser ? <NavigationAuth name={"juan"} /> : <NavigationNonAuth />
+                authUser ? <NavigationAuth  /> : <NavigationNonAuth />
               }
             </AuthUserContext.Consumer>
   
