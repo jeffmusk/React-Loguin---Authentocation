@@ -5,6 +5,8 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { Col, Button, Form, FormGroup, Label, Input, Row, Alert } from 'reactstrap';
 import { SignUpLink } from '../Registro/Registro';
+import ResetPass from '../ContraseniaOlvidada/ResetPass'
+
 
 const Login = () => (
     <div>
@@ -52,6 +54,9 @@ const Login = () => (
       const isInvalid = password === '' || email === '';
   
       return (
+       <div>
+
+        
        <Row className="mt-5">
            <Col sm={2} className=""></Col>
            <Col sm={8} className="">
@@ -82,10 +87,17 @@ const Login = () => (
                 <Col sm={10}  className="mt-3 text-center">
                  <SignUpLink />
                 </Col>
+                <Col sm={10}  className="mt-1 text-center">
+                 <ResetPass />
+                </Col>
+
+                
             </Row>
            </Col>
 
        </Row>
+
+       </div>
       );
     }
   }
