@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {BrowserRouter , Route , Switch } from 'react-router-dom';
 import Home from '../Home/Home';
 import {  Container } from 'reactstrap';
@@ -8,36 +8,13 @@ import Cuenta from '../Cuenta/Cuenta';
 import Admin from '../Admin/Admin';
 import Landing from '../Landing/Landing';
 import Registro from '../Registro/Registro';
-import { withFirebase } from '../Firebase';
+import { withAuthentication } from '../Session/Session';
 
 
-class App extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      authUser: null,
-    };
-  }
-
-  componentDidMount(){
-    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
-    });
-  }
-
-  componentWillUnmount() {
-    this.listener();
-  }
-
-  render() {
-    return (
-        <BrowserRouter >  
-      
-      <Navigation authUser={this.state.authUser} />
-
+const App = () => (
+    <BrowserRouter >   
+      <Navigation  />
       <Container fluid={false}  >
         <Switch>
           
@@ -53,10 +30,8 @@ class App extends Component {
         </Switch>
       </Container>
     </BrowserRouter>  
-    );
-  }
-}
+);
 
 
 
-export default withFirebase(App);
+export default withAuthentication(App);

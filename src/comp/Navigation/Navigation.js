@@ -3,7 +3,7 @@ import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Nav
 import { Link } from 'react-router-dom';
 import * as Routes from '../../Constantes/routes';
 import CerrarSesion from '../CerraSesion/CerrarSesion';
-
+import { AuthUserContext } from '../Session/Session';
 
 
 
@@ -13,7 +13,7 @@ const NavigationAuth = () => (
 
 const NavigationNonAuth = () => (
   <NavItem className="navbar-nav  ">       
-      <Button  color="primary" tag={Link} to={Routes.SIGN_IN} >Iniciar Sesion</Button>
+      <Button  color="primary" tag={Link} to={Routes.SIGN_IN} >Iniciar Sesion  </Button>
   </NavItem>
   
   );
@@ -33,6 +33,7 @@ export default class Navigation extends React.Component {
       dropdownOpen: !this.state.dropdownOpen
     });
   }
+
   DinamicNav= () =>{
     if (this.props.authUser) {
       return(
@@ -80,7 +81,14 @@ export default class Navigation extends React.Component {
             </DropdownMenu>
           </Dropdown>
 
-          {this.DinamicNav()}
+          
+            <AuthUserContext.Consumer>
+              
+              {authUser =>
+                authUser ? <NavigationAuth name={"juan"} /> : <NavigationNonAuth />
+              }
+            </AuthUserContext.Consumer>
+  
           
           
           
