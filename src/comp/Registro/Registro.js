@@ -4,7 +4,7 @@ import * as ROUTES from '../../Constantes/routes';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { Col, Button, Form, FormGroup, Label, Input, Row, Alert } from 'reactstrap';
-
+import * as ROLES from '../../Constantes/roles';
 
 const Registro = () => (
   <div>
@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
+  isAdmin:true,
 };
 
 class SignUpFormBase  extends Component {
@@ -30,8 +31,12 @@ class SignUpFormBase  extends Component {
 
   onSubmit = event => {
 
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne ,isAdmin  } = this.state;
+    const roles = {};
 
+    if(isAdmin) {
+      roles[ROLES.ADMIN] = ROLES.ADMIN;
+    }
     this.props.firebase
     .doCreateUserWithEmailAndPassword(email, passwordOne)
     .then(authUser => {
@@ -42,7 +47,7 @@ class SignUpFormBase  extends Component {
         id: authUser.user.uid,
         username,
         email,
-        roll: "USER",
+        roles,
       });
     })
     .then(() => {

@@ -10,30 +10,21 @@ const withAuthentication = Component => {
 
       this.state = {
         authUser: null,
-        currentUser:null,
+        loanding:true
       };
     }
 
     componentDidMount() {
-      this.listener = this.props.firebase.auth.onAuthStateChanged(
+      this.listener = this.props.firebase.onAuthUserListener(
         authUser => {
-          authUser
-            ? this.setState({ authUser })
-            : this.setState({ authUser: null });
-            this.getCurrentUser(authUser.user.uid);
-        },
+           this.setState({ authUser });
+          },() => {
+            this.setState({authUser:null});
+          },
       );
+      this.setState({loanding: false})
     }
 
-    getCurrentUser = (uid) => {
-      this.props.firebase.userId(uid).get()
-        .then( currentUser => {
-            this.setState(
-              currentUser
-            )
-        }            
-      )
-    }
 
     componentWillUnmount() {
       this.listener();
@@ -41,8 +32,8 @@ const withAuthentication = Component => {
 
     render() {
       return (
-        <AuthUserContext.Provider value={this.state.authUser}>
-          <Component {...this.props} />
+        <AuthUserContext.Provider value={this.state.authUser} >
+          <Component {...this.props} loanding={this.state.loanding} />
         </AuthUserContext.Provider>
       );
     }

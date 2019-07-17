@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import { withFirebase } from '../Firebase';
-
+import { withAuthorization } from '../Session/Session';
+import * as ROLES from '../../Constantes/roles';
+import { compose } from 'recompose';
 
 
 class Admin extends Component {
@@ -49,6 +51,7 @@ class Admin extends Component {
         return (
             <div className="Admin">
                 <h1>Vista de Adminisitrador</h1>
+                <p>Acesible solo para Adminitradores</p>
                 <UserList users={users} />
             </div>
         );
@@ -66,7 +69,7 @@ class Admin extends Component {
 
 const UserList = ({users}) => (
     <div className="usuarios">
-        <h3>Lista deUsuarios</h3>
+        <h3>Lista de Usuarios</h3>
         <ul>
             {users.map(user =>  {
                     return(
@@ -92,5 +95,10 @@ const UserList = ({users}) => (
 );
 
 
+const condition = authUser =>
+  authUser && !!authUser.roles[ROLES.ADMIN];
 
-export default withFirebase(Admin);
+export default compose(
+    withAuthorization(condition),
+    withFirebase,
+  )(Admin);

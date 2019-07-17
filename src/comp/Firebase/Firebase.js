@@ -2,6 +2,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import * as firebase from 'firebase';
+import  * as  ROUTES from '../../Constantes/routes'
 
 
 const config = {
@@ -35,6 +36,43 @@ class Firebase {
 
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
+
+     // *** Merge Auth and DB User API *** //
+
+  onAuthUserListener = (next, fallback) =>
+     this.auth.onAuthStateChanged(authUser => {
+        if (authUser){
+          this.userId(authUser.uid).get()
+            .then(snapshot => {
+              const dbUser = snapshot.data();
+
+
+              // default Rol vacio
+              if(!dbUser.roles){
+                dbUser.roles = {}
+              }
+
+              //Fucionar Usuario autenticado de firebase con el de Firestore
+              authUser = {
+                uid: authUser.uid,
+                email: authUser.email,
+                ...dbUser,
+              };
+
+              next(authUser);
+            });
+        }else{
+          fallback();
+        }
+
+/*
+        if (!condition(authUser)) {
+          this.props.history.push(ROUTES.SIGN_IN);
+        } */
+      }
+     
+    );
+
 
       // *** User API ***
 
