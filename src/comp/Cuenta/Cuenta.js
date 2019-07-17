@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {  Row, Col } from 'reactstrap';
-import CambiarPass from './Cambiarpass';
+import CambiarPass from '../CambioContrasenia/Cambiarpass';
 import ResetPass from '../ContraseniaOlvidada/ResetPass'
 import { withAuthorization } from '../Session/Session';
 
@@ -34,5 +34,5 @@ render() {
 }
 }
 
-const condition = authUser => !!authUser;
+const condition = authUser => authUser != null;
 export default withAuthorization(condition)(Cuenta);

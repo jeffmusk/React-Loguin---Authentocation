@@ -10,6 +10,7 @@ const withAuthentication = Component => {
 
       this.state = {
         authUser: null,
+        currentUser:null,
       };
     }
 
@@ -19,8 +20,19 @@ const withAuthentication = Component => {
           authUser
             ? this.setState({ authUser })
             : this.setState({ authUser: null });
+            this.getCurrentUser(authUser.user.uid);
         },
       );
+    }
+
+    getCurrentUser = (uid) => {
+      this.props.firebase.userId(uid).get()
+        .then( currentUser => {
+            this.setState(
+              currentUser
+            )
+        }            
+      )
     }
 
     componentWillUnmount() {

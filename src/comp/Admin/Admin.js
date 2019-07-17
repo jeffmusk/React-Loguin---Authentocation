@@ -1,32 +1,43 @@
 import React,{Component} from 'react';
 import { withFirebase } from '../Firebase';
-import SnapshotState from 'jest-snapshot/build/State';
+
+
 
 class Admin extends Component {
     constructor(props) {
         super(props);
     
         this.state = {
-          loading: false,
-          users: {},
+          loading: true,
+          users: [],
         };
       }
 
     componentDidMount() {
       this.setState({loading: true});
+        
+    const unsubscribe =  this.props.firebase.users().onSnapshot( querySnapshot => {  
+         var  actualUsers = querySnapshot.docs.map(doc => doc.data());
+        this.setState({
+            users:actualUsers,
+            loading:false ,
+          }) 
       
+        }
+      )
+      /*
       this.props.firebase.users().on('value', snapshot => {
         const usersObject = snapshot.val();
         const usersList = Object.keys(usersObject).map(key => ({
             ...usersObject[key],
             uid: key,
           }));
-
-        this.setState({
-            users:usersList,
-            loading:false ,
-        })
-      } )
+          this.setState({
+              users:usersList,
+              loading:false ,
+            })
+        } )
+        */
     }
 
     
@@ -38,7 +49,7 @@ class Admin extends Component {
         return (
             <div className="Admin">
                 <h1>Vista de Adminisitrador</h1>
-                <UserList />
+                <UserList users={users} />
             </div>
         );
     }
@@ -47,8 +58,9 @@ class Admin extends Component {
 
      // Al desmontar el componente dejar de escuchar a firebase realdatabase
     componentWillUnmount() {
-        this.props.firebase.users().off();
+        
       }
+
     
 }
 
@@ -56,20 +68,26 @@ const UserList = ({users}) => (
     <div className="usuarios">
         <h3>Lista deUsuarios</h3>
         <ul>
-        { users != null ? users.map(user => (
-        <li key={user.uid}>
-            <span>
-            <strong>ID:</strong> {user.uid}
-            </span>
-            <span>
-            <strong>E-Mail:</strong> {user.email}
-            </span>
-            <span>
-            <strong>Username:</strong> {user.username}
-            </span>
-        </li>
-        )) : <p>Sin Usuarios</p>}
+            {users.map(user =>  {
+                    return(
+                        <li>
+                            <span>
+                            <strong>ID:</strong> {user.id}
+                            </span>
+                            <span>
+                            <strong>E-Mail:</strong> {user.email}
+                            </span>
+                            <span>
+                            <strong>Username:</strong> {user.username}
+                            </span>
+                        </li>
+                        
+                    )
+                }  
+            )}
         </ul>
+        {console.log(users)}
+        
     </div>
 );
 

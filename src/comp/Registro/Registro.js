@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { Col, Button, Form, FormGroup, Label, Input, Row, Alert } from 'reactstrap';
 
+
 const Registro = () => (
   <div>
     <h1 className="text-center mt-5">Registro</h1>
@@ -32,24 +33,28 @@ class SignUpFormBase  extends Component {
     const { username, email, passwordOne } = this.state;
 
     this.props.firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then( authUser => {
-          //Crear un usuario en firebase realtime Data base
-          return this.props.firebase
-            .user(authUser.user.iud)
-            .set({username , email}); 
-      })
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
-      })
-      .catch(error => {
-        this.setState({ error });
+    .doCreateUserWithEmailAndPassword(email, passwordOne)
+    .then(authUser => {
+      // Create a user in your Firebase realtime database
+      
+      
+      return this.props.firebase.userId(authUser.user.uid).set({
+        id: authUser.user.uid,
+        username,
+        email,
+        roll: "USER",
       });
+    })
+    .then(() => {
+      this.setState({ ...INITIAL_STATE });
+      this.props.history.push(ROUTES.HOME);
+    })
+    .catch(error => {
+      this.setState({ error });
+    });
 
-    event.preventDefault();
-
-  }
+  event.preventDefault();
+};
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
