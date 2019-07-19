@@ -10,19 +10,22 @@ const withAuthentication = Component => {
 
       this.state = {
         authUser: null,
-        loanding:true
+        loanding: true,
       };
     }
 
     componentDidMount() {
       this.listener = this.props.firebase.onAuthUserListener(
         authUser => {
-           this.setState({ authUser });
+           this.setState({ authUser , loanding:false });
+           
           },() => {
-            this.setState({authUser:null});
+            this.setState({authUser:null, loanding:false});
           },
       );
-      this.setState({loanding: false})
+        
+         
+       
     }
 
 
@@ -32,8 +35,8 @@ const withAuthentication = Component => {
 
     render() {
       return (
-        <AuthUserContext.Provider value={this.state.authUser} >
-          <Component {...this.props} loanding={this.state.loanding} />
+        <AuthUserContext.Provider value={this.state.authUser}   >
+          <Component {...this.props} loanding={this.state.loanding}  />
         </AuthUserContext.Provider>
       );
     }

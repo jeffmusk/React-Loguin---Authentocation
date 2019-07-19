@@ -57,7 +57,7 @@ class ResetPass extends Component {
                 <Form onSubmit={this.onSubmit}>
                   <FormGroup>
                     <Label for="exampleEmail">Correo Electronico</Label>
-                    <Input name="email"    value={this.state.email}    onChange={this.onChange}     type="text"    placeholder="Email con el que creo la cuenta" />
+                    <Input name="email"    value={this.state.email}    onChange={this.onChange}     type="text"    placeholder="Email con el que se registro" />
                   </FormGroup>
                 <Button color="primary" disabled={isInvalid} type="submit" onClick={this.toggle}>Restablecer contraseña</Button>{' '}
                 </Form>

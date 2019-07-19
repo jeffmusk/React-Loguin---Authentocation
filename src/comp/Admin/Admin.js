@@ -3,6 +3,7 @@ import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session/Session';
 import * as ROLES from '../../Constantes/roles';
 import { compose } from 'recompose';
+import { Loanding } from '../Loanding/Loanding';
 
 
 class Admin extends Component {
@@ -16,9 +17,9 @@ class Admin extends Component {
       }
 
     componentDidMount() {
-      this.setState({loading: true});
+      
         
-    const unsubscribe =  this.props.firebase.users().onSnapshot( querySnapshot => {  
+    this.listener =  this.props.firebase.users().onSnapshot( querySnapshot => {  
          var  actualUsers = querySnapshot.docs.map(doc => doc.data());
         this.setState({
             users:actualUsers,
@@ -27,19 +28,7 @@ class Admin extends Component {
       
         }
       )
-      /*
-      this.props.firebase.users().on('value', snapshot => {
-        const usersObject = snapshot.val();
-        const usersList = Object.keys(usersObject).map(key => ({
-            ...usersObject[key],
-            uid: key,
-          }));
-          this.setState({
-              users:usersList,
-              loading:false ,
-            })
-        } )
-        */
+      
     }
 
     
@@ -47,9 +36,10 @@ class Admin extends Component {
 
     render() {
         const { users, loading } = this.state;
-
+        
         return (
-            <div className="Admin">
+          <div className="Admin">
+            
                 <h1>Vista de Adminisitrador</h1>
                 <p>Acesible solo para Adminitradores</p>
                 <UserList users={users} />
@@ -61,7 +51,7 @@ class Admin extends Component {
 
      // Al desmontar el componente dejar de escuchar a firebase realdatabase
     componentWillUnmount() {
-        
+      this.listener();
       }
 
     

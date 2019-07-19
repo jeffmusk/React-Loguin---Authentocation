@@ -6,6 +6,7 @@ import { withFirebase } from '../Firebase';
 import { Col, Button, Form, FormGroup, Label, Input, Row, Alert } from 'reactstrap';
 import { SignUpLink } from '../Registro/Registro';
 import ResetPass from '../ContraseniaOlvidada/ResetPass'
+import { Loanding } from '../Loanding/Loanding';
 
 
 const Login = () => (
@@ -25,22 +26,28 @@ const Login = () => (
     constructor(props) {
       super(props);
   
-      this.state = { ...INITIAL_STATE };
+      this.state = { ...INITIAL_STATE,loanding: false, };
     }
   
     onSubmit = event => {
       const { email, password } = this.state;
-  
+      this.setState({loanding: true})
+
       this.props.firebase
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
           this.setState({ ...INITIAL_STATE });
-          this.props.history.push(ROUTES.HOME);
+          this.setState({loanding: false})
+          this.props.history.push(ROUTES.ACCOUNT);
         })
         .catch(error => {
           this.setState({ error });
+          this.setState({loanding: false})
         });
-  
+        
+    
+
+
       event.preventDefault();
     };
   
@@ -48,12 +55,21 @@ const Login = () => (
       this.setState({ [event.target.name]: event.target.value });
     };
   
+   
+      
+   
     render() {
       const { email, password, error } = this.state;
   
       const isInvalid = password === '' || email === '';
-  
-      return (
+
+      if (this.state.loanding) {
+        return (
+          <Loanding />
+        )
+      }else{
+        
+return (
        <div>
 
         
@@ -64,13 +80,13 @@ const Login = () => (
                     <FormGroup row>
                         <Label for="exampleEmail" sm={3}>Email</Label>
                         <Col sm={9}>
-                            <Input  name="email"  value={email}  onChange={this.onChange}  type="text"  placeholder="Correo Electronico"/>
+                            <Input  name="email"  value={email}  onChange={this.onChange} autocomplete="email"  type="text"  placeholder="Correo Electronico"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Label for="exampleEmail" sm={3}>Contraseña</Label>
                         <Col sm={9}>
-                         <Input   name="password"   value={password}   onChange={this.onChange}   type="password"   placeholder="Contraseña" />
+                         <Input   name="password"   value={password}   onChange={this.onChange}   type="password"  autocomplete="new-password"  placeholder="Contraseña" />
                         </Col>
                     </FormGroup>
                     <FormGroup check row>
@@ -99,6 +115,10 @@ const Login = () => (
 
        </div>
       );
+    
+    } // Final del else
+
+
     }
   }
   const SignInForm = compose(

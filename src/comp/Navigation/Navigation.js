@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import * as Routes from '../../Constantes/routes';
 import CerrarSesion from '../CerraSesion/CerrarSesion';
 import { AuthUserContext } from '../Session/Session';
+import { Carga } from '../Loanding/Loanding';
 
 
 
@@ -35,21 +36,15 @@ export default class Navigation extends React.Component {
   }
 
   DinamicNav= () =>{
-    if (this.props.authUser) {
-      return(
-        <NavigationAuth />
-        )
-    } else {
-      return(
-        <NavigationNonAuth />
-        )
-    }
-   
+    
    
   }
   
 
   render() {
+
+    
+   
     return (
       <div>
         <Nav  className="navbar navbar-expand-lg navbar-dark bg-dark">

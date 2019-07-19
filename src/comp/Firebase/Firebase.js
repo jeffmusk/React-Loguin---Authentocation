@@ -2,7 +2,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import * as firebase from 'firebase';
-import  * as  ROUTES from '../../Constantes/routes'
+
 
 
 const config = {
@@ -65,10 +65,6 @@ class Firebase {
           fallback();
         }
 
-/*
-        if (!condition(authUser)) {
-          this.props.history.push(ROUTES.SIGN_IN);
-        } */
       }
      
     );
